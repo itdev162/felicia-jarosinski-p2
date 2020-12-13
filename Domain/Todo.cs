@@ -1,7 +1,7 @@
 using System;
 namespace Domain
 {
-    public class Task
+    public class Todo
     {
         public Guid Id {get; set;}
         public DateTime Date {get; set;}
