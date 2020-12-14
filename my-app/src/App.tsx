@@ -4,7 +4,7 @@ import './App.css';
 
 class App extends React.Component {
   state = {
-    values: []
+    values :[]
   }
 
   componentDidMount() {
@@ -23,7 +23,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          BlogBox
+          TodoTask
         </header>
         {this.state.values.map((value:any) => <div key={value}>{value}</div>)}
       </div>
