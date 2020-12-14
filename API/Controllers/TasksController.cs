@@ -54,9 +54,10 @@ namespace API.Controllers
             var todo = new Todo
             {
                 Id = request.Id,
+                Date = request.Date,
                 Title = request.Title,
-                Body = request.Body,
-                Date = request.Date
+                Body = request.Body
+                
             };
 
             context.Tasks.Add(todo);
@@ -79,30 +80,31 @@ namespace API.Controllers
 
         public ActionResult<Todo> Update([FromBody] Todo request)
         {
-            var post = context.Tasks.Find(request.Id);
+            var todo = context.Tasks.Find(request.Id);
 
-            if (post == null)
+            if (todo == null)
             {
-                throw new Exception("Could not find post!");
+                throw new Exception("Could not find todo!");
             }
 
             //update post
-            post.Title = request.Title != null ? request.Title : post.Title;
-            post.Body = request.Body != null ? request.Body : post.Body;
-            post.Date = request.Date != null ? request.Date : post.Date;
+            todo.Date = request.Date != null ? request.Date : todo.Date;
+            todo.Title = request.Title != null ? request.Title : todo.Title;
+            todo.Body = request.Body != null ? request.Body : todo.Body;
+            
 
             var success = context.SaveChanges() > 0;
 
             if (success)
             {
-                return Todo;
+                return todo;
             }
 
             throw new Exception("Error updating todo");
         }
-    }
     /* public async Task<ActionResult<List<Post>>> List()
     {
         return await this.mediator.Send(new List.Query());
     } */
+    }
 }
