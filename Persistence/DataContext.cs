@@ -8,7 +8,7 @@ namespace Persistence
         public DbSet<Value> Values {get; set;}
         public DbSet<Post> Posts {get; set;}
 
-        public DbSet<Task> Tasks {get; set;}
+        public DbSet<Todo> Tasks {get; set;}
 
         public DataContext(DbContextOptions options) : base(options)
         {
