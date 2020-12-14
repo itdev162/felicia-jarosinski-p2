@@ -79,28 +79,55 @@ namespace API.Controllers
 
         public ActionResult<Todo> Update([FromBody] Todo request)
         {
-            var post = context.Tasks.Find(request.Id);
+            var todo = context.Tasks.Find(request.Id);
 
-            if (post == null)
+            if (todo == null)
             {
-                throw new Exception("Could not find post!");
+                throw new Exception("Could not find todo!");
             }
 
             //update post
-            post.Title = request.Title != null ? request.Title : post.Title;
-            post.Body = request.Body != null ? request.Body : post.Body;
-            post.Date = request.Date != null ? request.Date : post.Date;
+            todo.Title = request.Title != null ? request.Title : todo.Title;
+            todo.Body = request.Body != null ? request.Body : todo.Body;
+            todo.Date = request.Date != null ? request.Date : todo.Date;
 
             var success = context.SaveChanges() > 0;
 
             if (success)
             {
-                return Todo;
+                return todo;
             }
 
             throw new Exception("Error updating todo");
         }
+    
+    /// <summary>
+    /// DELETE api/todo/[id]
+    /// </summary>
+    /// <param name = "id">Todo id </param>
+    /// <returns> True, if successful</returns>
+    [HttpDelete("{id}")]
+    public ActionResult<bool> Delete(Guid id)
+    {
+        var todo = context.Tasks.Find(id);
+
+        if (todo == null)
+        {
+            throw new Exception("Could not find todo");
+        }
+
+        context.Remove(todo);
+
+        var success = context.SaveChanges() > 0;
+
+        if (success)
+        {
+            return true;
+        }
+
+        throw new Exception("Error deleting todo");
     }
+}
     /* public async Task<ActionResult<List<Post>>> List()
     {
         return await this.mediator.Send(new List.Query());
